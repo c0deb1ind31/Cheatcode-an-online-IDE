@@ -1,5 +1,17 @@
 # Algouniversity IDE Assignment
 
+## Run backend with docker-compose
+```
+docker compose up -d
+```
+## Run frontend
+```
+yarn install
+yarn dev
+```
+
+
+## Refer this for running without docker
 ## Setup
 
 Create virtual environment and source it
