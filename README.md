@@ -1,14 +1,10 @@
 # Algouniversity IDE Assignment
 
-## Run backend with docker-compose
+## Run with docker-compose
 ```
 docker compose up -d
 ```
-## Run frontend
-```
-yarn install
-yarn dev
-```
+Access webapp at http://localhost:3000
 
 
 ## Refer this for running without docker
