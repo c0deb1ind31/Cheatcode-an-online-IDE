@@ -52,3 +52,9 @@ Start frontend server at port 5173
 cd frontend
 yarn dev
 ```
+
+## System Design
+![System Design](./images/system-design.png)
+
+## Database Design
+![Database Design](./images/db-design.png)
