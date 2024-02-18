@@ -3,5 +3,5 @@ from .models import Problems
 
 class ProblemsSerialiser(serializers.ModelSerializer):
     class Meta:
-        model = Message
+        model = Problems
         fields = '__all__'
