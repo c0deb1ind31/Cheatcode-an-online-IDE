@@ -50,12 +50,12 @@ services:
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
       - CELERY_BROKER_URL=amqp://broker:5672//
-  
     depends_on:
       - broker
       - db
 
   frontend:
+    container_name: frontend-server
     build: ./frontend
     ports:
       - "3000:80"
