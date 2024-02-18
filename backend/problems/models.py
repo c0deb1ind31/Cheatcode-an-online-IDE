@@ -13,7 +13,7 @@ class Problems(models.Model):
         ('hard', 'Hard'),
     )
     test_input= models.TextField()
-    test_output= models.TextField(null=True)
+    test_output= models.TextField()
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     
