@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
+
 
 from pathlib import Path
 
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-$s5rlwo)z@cbc2k&3_7w-=*!s9+s8*f7*c-$_%6!zs61p_7yk!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -39,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'problems',
-    'submissions'
+    'users',
+    'submissions',
+    'celery'
 
 ]
 
@@ -52,6 +56,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -80,16 +90,18 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  # change it databasename
-        'USER': '<User>',  # change it database user name
-        'PASSWORD': '<Password>',  # change user database password
-        'HOST': '<Host>',
-        'PORT': '5432',
+        'USER': os.getenv('POSTGRES_USER'),
+        'NAME': os.getenv('POSTGRES_DB'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
+        'CONN_MAX_AGE': 10
+
     }
 }
 
 
-CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 
 
 # Password validation
