@@ -1,0 +1,15 @@
+.reset-styles h2{
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.reset-styles p{
+    font-size: 14px;
+    font-weight: 300;
+}
+.reset-styles li{
+    padding: unset;
+    font-size: 14px;
+    font-weight: 300;
+    list-style:disc;
+}
