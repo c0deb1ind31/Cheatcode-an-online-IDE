@@ -1,0 +1,64 @@
+version: '3.5'
+
+services:
+  db:
+    container_name: postgres-db
+    image: "postgres:15"
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=test
+    ports:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  broker:
+    container_name: rabbitmq-broker
+    image: "rabbitmq:alpine"
+
+  backend:
+    build: ./backend
+    container_name: backend-server
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/home/user/app/
+
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - CELERY_BROKER_URL=amqp://broker:5672//
+
+    depends_on:
+      - db
+      - broker
+
+  celery:
+    build: ./backend
+    container_name: celery-runtime
+    command: celery --app=backend worker --loglevel=info
+    volumes:
+      - ./:/home/user/app/
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - CELERY_BROKER_URL=amqp://broker:5672//
+    depends_on:
+      - broker
+      - db
+
+  frontend:
+    container_name: frontend-server
+    build: ./frontend
+    ports:
+      - "3000:80"
+
+volumes:
+  postgres_data:
