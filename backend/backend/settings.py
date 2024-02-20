@@ -13,6 +13,9 @@ import os
 
 
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +31,9 @@ SECRET_KEY = 'django-insecure-$s5rlwo)z@cbc2k&3_7w-=*!s9+s8*f7*c-$_%6!zs61p_7yk!
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost",
-                 'http://ec2-16-171-174-143.eu-north-1.compute.amazonaws.com']
+                 "http://16.171.195.145",
+                 "16.171.195.145",
+                 "ec2-16-171-195-145.eu-north-1.compute.amazonaws.com", "http://ec2-16-171-195-145.eu-north-1.compute.amazonaws.com"]
 
 # Application definition
 
@@ -63,8 +68,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
-    'http://ec2-16-171-174-143.eu-north-1.compute.amazonaws.com'
-]
+    "http://16.171.195.145",
+    "http://ec2-16-171-195-145.eu-north-1.compute.amazonaws.com",]
+
 
 CORS_ALLOW_METHODS = [
     'DELETE',
