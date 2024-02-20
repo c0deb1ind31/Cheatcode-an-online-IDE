@@ -13,13 +13,17 @@ import { Skeleton } from "./ui/skeleton";
 
 import { ProblemType } from "@/types";
 
-export default function QuestionView({problem}:{problem:ProblemType}) {
+export default function QuestionView({ problem }: { problem: ProblemType }) {
   const { newSubmission } = useNewSubmissionContext();
 
   const { loading: allSubmissonLoading, data: allSubmissonData } =
     useFetchSubmissions(problem?.id, newSubmission?.status == "completed");
   const { loading: userSubmissonLoading, data: userSubmissonData } =
-    useFetchUserSubmissions(problem?.id, "61420d1c-81ab-4f7d-8b19-df34d57ba673", newSubmission?.status == "completed");
+    useFetchUserSubmissions(
+      problem?.id,
+      import.meta.env.VITE_DB_USER_ID,
+      newSubmission?.status == "completed"
+    );
 
   return (
     <div className="flex-1 h-full bg-[#282828] rounded-md p-4  overflow-hidden">
@@ -52,7 +56,10 @@ export default function QuestionView({problem}:{problem:ProblemType}) {
             title={problem.title}
           />
         </TabsContent>
-        <TabsContent value="my-submissions" className="w-full h-full overflow-scroll">
+        <TabsContent
+          value="my-submissions"
+          className="w-full h-full overflow-scroll"
+        >
           {!userSubmissonLoading && userSubmissonData ? (
             <SubmissionsTable
               userSubmission={true}
@@ -62,7 +69,10 @@ export default function QuestionView({problem}:{problem:ProblemType}) {
             <Skeleton className="h-full w-full rounded-md" />
           )}
         </TabsContent>
-        <TabsContent value="all-submissions" className="w-full h-full overflow-scroll">
+        <TabsContent
+          value="all-submissions"
+          className="w-full h-full overflow-scroll"
+        >
           {!allSubmissonLoading && allSubmissonData ? (
             <SubmissionsTable submissions={allSubmissonData} />
           ) : (

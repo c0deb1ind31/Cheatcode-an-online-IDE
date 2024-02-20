@@ -24,6 +24,9 @@ export default function Home() {
             {!loading && !error && data && <Console   testCase={[data.test_input,data.test_output]} />}
             
           </div>
+          {!loading&&error&&!data && <div className="flex items-center justify-center h-full w-full">
+            <h1 className="text-4xl ">Problem not found</h1>
+          </div> }
         </NewSubmissionContextProvider>
       </div>
     </div>

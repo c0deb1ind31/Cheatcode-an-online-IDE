@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -20,8 +20,8 @@ def getAllProblems(request):
 
 @api_view(['GET'])
 def getProblem(request, pid):
-    problems = Problems.objects.get(id=pid)
+    problems = get_object_or_404(Problems, id=pid)
     serialiser = ProblemsSerialiser(problems)
-    return JsonResponse(data=serialiser.data,status=status.HTTP_200_OK)
+    return Response(data=serialiser.data,status=status.HTTP_200_OK)
 
 

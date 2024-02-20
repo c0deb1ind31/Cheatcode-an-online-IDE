@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 
 from .models import Submissions
 from .serializer import SubmissionsSerialiser
@@ -20,16 +21,18 @@ def getAllSubmissions(request, pid):
 
 @api_view(['POST'])
 def makeSubmission(request, pid):
-    data = request.data
-    submission = Submissions(user_id=data["user_id"], problem_id=pid, code_lang=data["lang"], submission_code=data["code"],
-                             submission_type=data["submission_type"], status="pending")
-    submission.save()
-    run_submission.delay(submission.id, submission.submission_code,
-                         submission.inputs, submission.code_lang)
-    data = {'submission_id': submission.id}
+    try:
+        data = request.data
+        submission = Submissions(user_id=data["user_id"], problem_id=pid, code_lang=data["lang"], submission_code=data["code"],
+                                submission_type=data["submission_type"], status="pending")
+        submission.save()
+        run_submission.delay(submission.id, submission.submission_code,
+                            submission.inputs, submission.code_lang)
+        data = {'submission_id': submission.id}
 
-    return Response(data)
-
+        return Response(data)
+    except ValidationError:
+        return Response("validation error")
 
 @api_view(['GET'])
 def getUserSubmissions(request, pid,uid):
@@ -40,14 +43,15 @@ def getUserSubmissions(request, pid,uid):
 
 @api_view(['GET'])
 def getSubmission(request, sub_id):
-    submission = Submissions.objects.get(id=sub_id)
+
+    submission = get_object_or_404(Submissions,id=sub_id)
     serialiser = SubmissionsSerialiser(submission)
     return Response(data=serialiser.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
 def checkSubmissionStatus(request, sub_id):
-    submission = Submissions.objects.get(id=sub_id)
+    submission = get_object_or_404(Submissions,id=sub_id)
     serialiser = SubmissionsSerialiser(submission)
     if serialiser.data['status'] == "pending":
         data = {'status': 'pending'}

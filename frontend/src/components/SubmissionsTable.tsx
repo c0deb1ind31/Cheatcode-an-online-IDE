@@ -104,6 +104,11 @@ export default function SubmissionsTable({
                 </TableCell>
               </TableRow>
             ))}
+            {submissions.length==0&& <TableRow>
+              <TableCell className="w-[180px]" >
+              <div >No Submissions found</div>
+              </TableCell>
+            </TableRow> }
           </TableBody>
         </Table>
       ) : (
