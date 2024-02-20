@@ -13,6 +13,9 @@ import os
 
 
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -66,8 +69,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
     "http://16.171.195.145",
-    "16.171.195.145",
-    "ec2-16-171-195-145.eu-north-1.compute.amazonaws.com", "http://ec2-16-171-195-145.eu-north-1.compute.amazonaws.com"]
+    "http://ec2-16-171-195-145.eu-north-1.compute.amazonaws.com",]
 
 
 CORS_ALLOW_METHODS = [
