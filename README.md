@@ -1,6 +1,6 @@
 # Algouniversity IDE Assignment
 
-### Deployement link : http://16.171.195.145/
+### Deployment link : http://16.171.195.145/
 
 ## Run with docker-compose
 ```
