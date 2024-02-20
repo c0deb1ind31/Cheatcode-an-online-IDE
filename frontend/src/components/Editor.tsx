@@ -35,7 +35,7 @@ export default function Editor({problemId}:{problemId:number}) {
     setSubmitted(false);
     apiServices
       .submitSolution(
-        "61420d1c-81ab-4f7d-8b19-df34d57ba673",
+        import.meta.env.VITE_DB_USER_ID,
         problemId,
         codeLang,
         code,
