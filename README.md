@@ -1,5 +1,7 @@
 # Algouniversity IDE Assignment
 
+### Deployement link : http://16.171.195.145/
+
 ## Run with docker-compose
 ```
 docker compose up -d
@@ -22,12 +24,18 @@ Install Backend Requirements
 cd backend
 pip install -r requirements.txt
 ```
+Add Env Variables (Postgres and RabbitMQ)
+
+```
+cd backend
+mv .env.example .env
+```
 
 Install Frontend Requirements
 
 ```
 cd frontend
-yarn install or npm install
+npm install
 ```
 
 ## Run
@@ -42,11 +50,11 @@ python manage.py runsever 0.0.0.0:5000
 
 ```
 
-Start frontend server at port 5173
+Start frontend server at port 3000
 
 ```
 cd frontend
-yarn dev
+npm run dev
 ```
 
 ## System Design
