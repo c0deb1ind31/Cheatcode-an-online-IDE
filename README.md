@@ -57,6 +57,35 @@ cd frontend
 npm run dev
 ```
 
+## Example code for problem no 1 
+Python 
+
+``` python
+class solution:
+    def code(inputs):
+        if inputs < 0:
+            return False
+
+        reversed_num = 0
+        temp = inputs
+
+        while temp != 0:
+            digit = temp % 10
+            reversed_num = reversed_num * 10 + digit
+            temp //= 10
+
+        return reversed_num ==inputs
+
+```
+JavaScript
+```js
+function solution(input) {
+    let str= input.toString()
+    const cleanedStr =str.toLowerCase().replace(/[\W_]/g, '');
+    return cleanedStr === cleanedStr.split('').reverse().join('');
+}
+```
+
 ## System Design
 ![System Design](./images/system-design.png)
 
