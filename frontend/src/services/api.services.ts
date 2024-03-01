@@ -4,7 +4,21 @@ const api = axios.create({
   baseURL: `${import.meta.env.VITE_API_ENDPOINT}/api`,
 });
 
-// async function getUser() {}
+async function getUser(google_id: string) {
+  return await api.get(`/user/${google_id}`);
+}
+
+async function createUser(
+  google_id: string,
+  user_name: string,
+  email: string
+) {
+  return await api.post(`/user/create`, {
+    gid: google_id,
+    username: user_name,
+    email: email,
+  });
+}
 
 async function getProblem(problem_id: number) {
   return (await api.get(`/problems/${problem_id}`)).data;
@@ -46,4 +60,6 @@ export const apiServices = {
   submitSolution,
   getSubmissionStatus,
   getProblem,
+  getUser,
+  createUser
 };
