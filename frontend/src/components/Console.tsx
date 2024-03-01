@@ -27,7 +27,7 @@ export default function Console({testCase}:{testCase:string[]}) {
         return () => clearInterval(interval);
       }
     }
-  }, [newSubmission,setNewSubmission]);
+  }, [newSubmission]);
   return (
     <div className="flex-1 rounded-md bg-[#282828] p-3">
       <Tabs value={tab}>

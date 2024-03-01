@@ -12,16 +12,19 @@ import useFetchUserSubmissions from "@/hooks/useFetchUserSubmissions.";
 import { Skeleton } from "./ui/skeleton";
 
 import { ProblemType } from "@/types";
+import useAuth from "@/hooks/useAuth";
 
 export default function QuestionView({ problem }: { problem: ProblemType }) {
   const { newSubmission } = useNewSubmissionContext();
+  const { user } = useAuth();
 
   const { loading: allSubmissonLoading, data: allSubmissonData } =
     useFetchSubmissions(problem?.id, newSubmission?.status == "completed");
+
   const { loading: userSubmissonLoading, data: userSubmissonData } =
     useFetchUserSubmissions(
       problem?.id,
-      import.meta.env.VITE_DB_USER_ID,
+      user?.uid || "",
       newSubmission?.status == "completed"
     );
 
