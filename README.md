@@ -1,7 +1,6 @@
 # Algouniversity IDE Assignment
 
-### Deployment link : http://16.171.195.145/
-
+### Deployment link : http://ec2-16-171-6-30.eu-north-1.compute.amazonaws.com
 ## Run with docker-compose
 ```
 docker compose up -d
