@@ -14,13 +14,15 @@ import { Button } from "@/components/ui/button";
 import { useNewSubmissionContext } from "@/context/newSubmissionContext";
 import { apiServices } from "@/services/api.services";
 import { MoonLoader } from "react-spinners";
-export default function Editor({problemId}:{problemId:number}) {
+import useAuth from "@/hooks/useAuth";
+export default function Editor({ problemId }: { problemId: number }) {
   const default_code = {
     python: `class solution:\n    def code(inputs):\n        return answer `,
     javascript: `function solution(input) {\n  return;\n}`,
   };
   const [code, setCode] = useState(default_code.python);
   const [codeLang, setCodeLang] = useState<"python" | "javascript">("python");
+  const { user } = useAuth();
 
   const { setNewSubmission } = useNewSubmissionContext();
   const [sumbitted, setSubmitted] = useState(true);
@@ -32,26 +34,21 @@ export default function Editor({problemId}:{problemId:number}) {
     setCode(default_code[codeLang]);
   }
   function handleExecutionClick(type: "run" | "submit") {
-    setSubmitted(false);
-    apiServices
-      .submitSolution(
-        import.meta.env.VITE_DB_USER_ID,
-        problemId,
-        codeLang,
-        code,
-        type
-      )
-      .then((res) => {
-        if (res.submission_id) {
-
-          setNewSubmission({ id: res.submission_id, status: "pending" });
+    if (user) {
+      setSubmitted(false);
+      apiServices
+        .submitSolution(user.uid, problemId, codeLang, code, type)
+        .then((res) => {
+          if (res.submission_id) {
+            setNewSubmission({ id: res.submission_id, status: "pending" });
+            setSubmitted(true);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
           setSubmitted(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-        setSubmitted(true);
-      });
+        });
+    }
   }
   return (
     <div className="flex-2 flex flex-col rounded-md bg-[#282828] w-tc-editor-var overflow-hidden p-2">
@@ -100,7 +97,7 @@ export default function Editor({problemId}:{problemId:number}) {
           variant="outline"
           className="dark:bg-zinc-600 dark:hover:bg-zinc-700 "
           onClick={() => handleExecutionClick("run")}
-          disabled={sumbitted!==true}
+          disabled={sumbitted !== true}
         >
           {!sumbitted ? <MoonLoader color="white" size={15} /> : "Run"}
         </Button>
@@ -108,7 +105,7 @@ export default function Editor({problemId}:{problemId:number}) {
           variant="outline"
           className="dark:bg-green-600 dark:hover:bg-green-700"
           onClick={() => handleExecutionClick("submit")}
-          disabled={sumbitted!==true}
+          disabled={sumbitted !== true}
         >
           {!sumbitted ? <MoonLoader color="white" size={15} /> : "Submit"}
         </Button>

@@ -66,7 +66,7 @@ export default function SubmissionsTable({
             {submissions.map((sub:SubmissionsType) => (
               <TableRow key={sub.id}>
                 {!userSubmission && (
-                  <TableCell className="font-medium">rhutik</TableCell>
+                  <TableCell className="font-medium">{sub?.user?.username}</TableCell>
                 )}
 
                 <TableCell className="font-medium w-[150px]">

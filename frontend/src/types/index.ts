@@ -12,7 +12,10 @@ export type SubmissionsType = {
   submission_code?: string;
   submission_type?: "run" | "submit";
   submitted_at?: string;
-  user?: string;
+  user?: {
+    username:string;
+    email:string;
+  };
 };
 
 export type ProblemType = {

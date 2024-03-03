@@ -7,7 +7,7 @@ from problems.models import Problems
 
 class Submissions(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE,related_name='submissions')
     problem = models.ForeignKey(Problems, on_delete=models.CASCADE)
 
     submitted_at = models.DateTimeField(auto_now_add=True)
